@@ -3,8 +3,31 @@
   <head>
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
     <script src="https://rawgit.com/jeromeetienne/AR.js/1.7.2/aframe/build/aframe-ar.min.js"></script>
+    <style>
+      /* Fullscreen button styling */
+      #startButton {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        padding: 1em 2em;
+        font-size: 1.2em;
+        background-color: #28a745;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        z-index: 1000;
+      }
+      #startButton:focus {
+        outline: none;
+      }
+    </style>
   </head>
   <body style="margin: 0; overflow: hidden;">
+    <!-- Start Experience Button -->
+    <button id="startButton">Start Experience</button>
+
     <a-scene embedded arjs>
       <!-- Enable debugging -->
       <a-entity arjs-debug></a-entity>
@@ -36,12 +59,33 @@
     </a-scene>
     
     <script>
-      document.querySelector('a-marker').addEventListener('markerFound', function() {
-        document.querySelector('#birdsound').components.sound.playSound();
-      });
-      
-      document.querySelector('a-marker').addEventListener('markerLost', function() {
-        document.querySelector('#birdsound').components.sound.stopSound();
+      // Wait for the DOM to load
+      document.addEventListener('DOMContentLoaded', function() {
+        var startButton = document.getElementById('startButton');
+        var scene = document.querySelector('a-scene');
+        var marker = document.querySelector('a-marker');
+        var sound = document.querySelector('#birdsound');
+
+        // Function to start the AR experience
+        function startExperience() {
+          // Hide the start button
+          startButton.style.display = 'none';
+
+          // Enable the sound component
+          sound.components.sound.playSound();
+
+          // Add event listeners for marker detection
+          marker.addEventListener('markerFound', function() {
+            sound.components.sound.playSound();
+          });
+
+          marker.addEventListener('markerLost', function() {
+            sound.components.sound.stopSound();
+          });
+        }
+
+        // Add click event listener to the start button
+        startButton.addEventListener('click', startExperience);
       });
     </script>
   </body>
