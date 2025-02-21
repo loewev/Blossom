@@ -9,11 +9,27 @@
       <!-- Enable debugging -->
       <a-entity arjs-debug></a-entity>
       
+      <!-- Background sound of birds -->
+      <a-sound src="birdsong.mp3" autoplay="true" loop="true" position="0 2 -5"></a-sound>
+      
       <!-- Define the marker -->
       <a-marker type="pattern" url="flower-marker.patt">
-        <!-- Load fewer flowers initially to optimize performance -->
-        <a-entity gltf-model="flower_model.glb" position="0 0 0" scale="1 1 1"></a-entity>
-        <a-entity gltf-model="flower_model.glb" position="1 0.5 0" scale="0.7 0.7 0.7"></a-entity>
+        <!-- Animated blooming flower -->
+        <a-entity gltf-model="flower_model.glb" position="0 0 0" scale="0 0 0">
+          <a-animation attribute="scale" begin="markerFound" to="1 1 1" dur="2000" fill="forwards"></a-animation>
+          <a-animation attribute="scale" begin="markerLost" to="0 0 0" dur="1000" fill="forwards"></a-animation>
+        </a-entity>
+        
+        <!-- Second flower opening and closing animation -->
+        <a-entity gltf-model="flower_model.glb" position="1 0.5 0" scale="0.7 0.7 0.7">
+          <a-animation attribute="scale" begin="markerFound" to="1 1 1" dur="3000" fill="forwards"></a-animation>
+          <a-animation attribute="scale" begin="5000" to="0.5 0.5 0.5" dur="3000" repeat="indefinite" direction="alternate"></a-animation>
+        </a-entity>
+        
+        <!-- Falling petals using particles -->
+        <a-entity position="0 2 -1">
+          <a-entity particle-system="preset: snow; particleCount: 200; color: #ffcccc; velocityValue: 0 -0.3 0; opacity: 0.8"></a-entity>
+        </a-entity>
       </a-marker>
       
       <a-entity camera></a-entity>
