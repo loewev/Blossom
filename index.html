@@ -9,11 +9,11 @@
       <!-- Enable debugging -->
       <a-entity arjs-debug></a-entity>
       
-      <!-- Background sound of birds -->
-      <a-sound src="birdsong.mp3" autoplay="true" loop="true" position="0 2 -5"></a-sound>
-      
       <!-- Define the marker -->
       <a-marker type="pattern" url="flower-marker.patt">
+        <!-- Play bird sound when marker is detected -->
+        <a-sound id="birdsound" src="birdsong.mp3" autoplay="false" loop="true"></a-sound>
+        
         <!-- Animated blooming flower -->
         <a-entity gltf-model="flower_model.glb" position="0 0 0" scale="0 0 0">
           <a-animation attribute="scale" begin="markerFound" to="1 1 1" dur="2000" fill="forwards"></a-animation>
@@ -36,10 +36,12 @@
     </a-scene>
     
     <script>
-      AFRAME.registerComponent('log', {
-        init: function () {
-          console.log('A-Frame scene initialized successfully');
-        }
+      document.querySelector('a-marker').addEventListener('markerFound', function() {
+        document.querySelector('#birdsound').components.sound.playSound();
+      });
+      
+      document.querySelector('a-marker').addEventListener('markerLost', function() {
+        document.querySelector('#birdsound').components.sound.stopSound();
       });
     </script>
   </body>
