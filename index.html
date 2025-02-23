@@ -32,29 +32,9 @@
         <!-- Bird sound with user interaction fix -->
         <a-sound id="birdsound" src="birdsong.mp3" autoplay="false" loop="true"></a-sound>
         
-        <!-- Multiple flowers appearing and blooming -->
+        <!-- Single flower appearing and blooming -->
         <a-entity gltf-model="flower_model.glb" position="0 0 0" scale="0 0 0">
           <a-animation attribute="scale" begin="markerFound" to="1 1 1" dur="2000" fill="forwards"></a-animation>
-          <a-animation attribute="scale" begin="markerLost" to="0 0 0" dur="1000" fill="forwards"></a-animation>
-        </a-entity>
-        
-        <a-entity gltf-model="flower_model.glb" position="1 0 0" scale="0 0 0">
-          <a-animation attribute="scale" begin="markerFound" to="0.7 0.7 0.7" dur="2000" fill="forwards"></a-animation>
-          <a-animation attribute="scale" begin="markerLost" to="0 0 0" dur="1000" fill="forwards"></a-animation>
-        </a-entity>
-        
-        <a-entity gltf-model="flower_model.glb" position="-1 0 0" scale="0 0 0">
-          <a-animation attribute="scale" begin="markerFound" to="0.8 0.8 0.8" dur="2500" fill="forwards"></a-animation>
-          <a-animation attribute="scale" begin="markerLost" to="0 0 0" dur="1000" fill="forwards"></a-animation>
-        </a-entity>
-        
-        <a-entity gltf-model="flower_model.glb" position="0.5 1 0" scale="0 0 0">
-          <a-animation attribute="scale" begin="markerFound" to="0.6 0.6 0.6" dur="2200" fill="forwards"></a-animation>
-          <a-animation attribute="scale" begin="markerLost" to="0 0 0" dur="1000" fill="forwards"></a-animation>
-        </a-entity>
-        
-        <a-entity gltf-model="flower_model.glb" position="-0.5 -1 0" scale="0 0 0">
-          <a-animation attribute="scale" begin="markerFound" to="0.9 0.9 0.9" dur="2800" fill="forwards"></a-animation>
           <a-animation attribute="scale" begin="markerLost" to="0 0 0" dur="1000" fill="forwards"></a-animation>
         </a-entity>
         
