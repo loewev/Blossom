@@ -4,7 +4,6 @@
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
     <script src="https://rawgit.com/jeromeetienne/AR.js/1.7.2/aframe/build/aframe-ar.min.js"></script>
     <style>
-      /* Fullscreen button styling */
       #startButton {
         position: absolute;
         top: 50%;
@@ -25,33 +24,43 @@
     </style>
   </head>
   <body style="margin: 0; overflow: hidden;">
-    <!-- Start Experience Button -->
     <button id="startButton">Start Experience</button>
-
     <a-scene embedded arjs>
-      <!-- Enable debugging -->
       <a-entity arjs-debug></a-entity>
       
-      <!-- Define the marker -->
       <a-marker type="pattern" url="flower-marker.patt">
-        <!-- Play bird sound when marker is detected -->
+        <!-- Bird sound with user interaction fix -->
         <a-sound id="birdsound" src="birdsong.mp3" autoplay="false" loop="true"></a-sound>
         
-        <!-- Animated blooming flower -->
+        <!-- Multiple flowers appearing and blooming -->
         <a-entity gltf-model="flower_model.glb" position="0 0 0" scale="0 0 0">
           <a-animation attribute="scale" begin="markerFound" to="1 1 1" dur="2000" fill="forwards"></a-animation>
           <a-animation attribute="scale" begin="markerLost" to="0 0 0" dur="1000" fill="forwards"></a-animation>
         </a-entity>
         
-        <!-- Second flower opening and closing animation -->
-        <a-entity gltf-model="flower_model.glb" position="1 0.5 0" scale="0.7 0.7 0.7">
-          <a-animation attribute="scale" begin="markerFound" to="1 1 1" dur="3000" fill="forwards"></a-animation>
-          <a-animation attribute="scale" begin="5000" to="0.5 0.5 0.5" dur="3000" repeat="indefinite" direction="alternate"></a-animation>
+        <a-entity gltf-model="flower_model.glb" position="1 0 0" scale="0 0 0">
+          <a-animation attribute="scale" begin="markerFound" to="0.7 0.7 0.7" dur="2000" fill="forwards"></a-animation>
+          <a-animation attribute="scale" begin="markerLost" to="0 0 0" dur="1000" fill="forwards"></a-animation>
+        </a-entity>
+        
+        <a-entity gltf-model="flower_model.glb" position="-1 0 0" scale="0 0 0">
+          <a-animation attribute="scale" begin="markerFound" to="0.8 0.8 0.8" dur="2500" fill="forwards"></a-animation>
+          <a-animation attribute="scale" begin="markerLost" to="0 0 0" dur="1000" fill="forwards"></a-animation>
+        </a-entity>
+        
+        <a-entity gltf-model="flower_model.glb" position="0.5 1 0" scale="0 0 0">
+          <a-animation attribute="scale" begin="markerFound" to="0.6 0.6 0.6" dur="2200" fill="forwards"></a-animation>
+          <a-animation attribute="scale" begin="markerLost" to="0 0 0" dur="1000" fill="forwards"></a-animation>
+        </a-entity>
+        
+        <a-entity gltf-model="flower_model.glb" position="-0.5 -1 0" scale="0 0 0">
+          <a-animation attribute="scale" begin="markerFound" to="0.9 0.9 0.9" dur="2800" fill="forwards"></a-animation>
+          <a-animation attribute="scale" begin="markerLost" to="0 0 0" dur="1000" fill="forwards"></a-animation>
         </a-entity>
         
         <!-- Falling petals using particles -->
         <a-entity position="0 2 -1">
-          <a-entity particle-system="preset: snow; particleCount: 200; color: #ffcccc; velocityValue: 0 -0.3 0; opacity: 0.8"></a-entity>
+          <a-entity particle-system="preset: snow; particleCount: 300; color: #ffcccc; velocityValue: 0 -0.3 0; opacity: 0.8"></a-entity>
         </a-entity>
       </a-marker>
       
@@ -59,33 +68,25 @@
     </a-scene>
     
     <script>
-      // Wait for the DOM to load
       document.addEventListener('DOMContentLoaded', function() {
         var startButton = document.getElementById('startButton');
-        var scene = document.querySelector('a-scene');
         var marker = document.querySelector('a-marker');
         var sound = document.querySelector('#birdsound');
-
-        // Function to start the AR experience
+        
         function startExperience() {
-          // Hide the start button
           startButton.style.display = 'none';
-
-          // Enable the sound component
           sound.components.sound.playSound();
-
-          // Add event listeners for marker detection
-          marker.addEventListener('markerFound', function() {
-            sound.components.sound.playSound();
-          });
-
-          marker.addEventListener('markerLost', function() {
-            sound.components.sound.stopSound();
-          });
         }
-
-        // Add click event listener to the start button
+        
         startButton.addEventListener('click', startExperience);
+        
+        marker.addEventListener('markerFound', function() {
+          sound.components.sound.playSound();
+        });
+        
+        marker.addEventListener('markerLost', function() {
+          sound.components.sound.stopSound();
+        });
       });
     </script>
   </body>
